@@ -12,7 +12,7 @@ using Sophia.Infrastructure.Persistence;
 namespace Sophia.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SophiaDbContext))]
-    [Migration("20261012215820_InitialCreate")]
+    [Migration("20261012221251_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,13 +34,6 @@ namespace Sophia.Infrastructure.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character(11)")
-                        .HasColumnName("cpf")
-                        .IsFixedLength();
 
                     b.Property<DateOnly?>("DataNascimento")
                         .HasColumnType("date")
@@ -64,10 +57,6 @@ namespace Sophia.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_clientes");
-
-                    b.HasIndex("Cpf")
-                        .IsUnique()
-                        .HasDatabaseName("ix_clientes_cpf");
 
                     b.HasIndex("Nome")
                         .HasDatabaseName("ix_clientes_nome");
@@ -180,6 +169,38 @@ namespace Sophia.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_vendas_data_venda");
 
                     b.ToTable("vendas", (string)null);
+                });
+
+            modelBuilder.Entity("Sophia.Domain.Entities.Cliente", b =>
+                {
+                    b.OwnsOne("Sophia.Domain.ValueObjects.Cpf", "Cpf", b1 =>
+                        {
+                            b1.Property<int>("ClienteId")
+                                .HasColumnType("integer")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("Numero")
+                                .IsRequired()
+                                .HasMaxLength(11)
+                                .HasColumnType("character(11)")
+                                .HasColumnName("cpf")
+                                .IsFixedLength();
+
+                            b1.HasKey("ClienteId");
+
+                            b1.HasIndex("Numero")
+                                .IsUnique()
+                                .HasDatabaseName("ix_clientes_cpf");
+
+                            b1.ToTable("clientes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClienteId")
+                                .HasConstraintName("fk_clientes_clientes_id");
+                        });
+
+                    b.Navigation("Cpf")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sophia.Domain.Entities.ItemVenda", b =>

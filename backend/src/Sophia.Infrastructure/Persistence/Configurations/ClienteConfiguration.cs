@@ -13,11 +13,21 @@ internal sealed class ClienteConfiguration : IEntityTypeConfiguration<Cliente>
 
         builder.HasKey(c => c.Id);
 
-        builder.Property(c => c.Cpf)
-            .HasConversion(cpf => cpf.Numero, numero => Cpf.Criar(numero))
-            .HasMaxLength(Cpf.Tamanho)
-            .IsFixedLength()
-            .IsRequired();
+        // Owned type na mesma tabela: permite consultar c.Cpf.Numero (ex.: busca parcial por CPF)
+        builder.OwnsOne(c => c.Cpf, cpf =>
+        {
+            cpf.Property(x => x.Numero)
+                .HasColumnName("cpf")
+                .HasMaxLength(Cpf.Tamanho)
+                .IsFixedLength()
+                .IsRequired();
+
+            cpf.HasIndex(x => x.Numero)
+                .IsUnique()
+                .HasDatabaseName("ix_clientes_cpf");
+        });
+
+        builder.Navigation(c => c.Cpf).IsRequired();
 
         builder.Property(c => c.Nome)
             .HasMaxLength(Cliente.NomeTamanhoMaximo)
@@ -29,7 +39,6 @@ internal sealed class ClienteConfiguration : IEntityTypeConfiguration<Cliente>
         builder.Property(c => c.Telefone)
             .HasMaxLength(Cliente.TelefoneTamanhoMaximo);
 
-        builder.HasIndex(c => c.Cpf).IsUnique();
         builder.HasIndex(c => c.Nome);
     }
 }

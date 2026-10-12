@@ -74,6 +74,7 @@ CREATE INDEX ix_vendas_cliente_id ON vendas (cliente_id);
 CREATE INDEX ix_vendas_data_venda ON vendas (data_venda);
 
 INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
-VALUES ('20261012215820_InitialCreate', '8.0.11');
+VALUES ('20261012221251_InitialCreate', '8.0.11');
 
 COMMIT;
+

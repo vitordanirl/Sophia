@@ -6,6 +6,8 @@ Aplicação web de controle de vendas para clientes, com cadastro de **clientes*
 - **Frontend:** React 19 + TypeScript (Vite), Tailwind CSS, shadcn/ui
 - **Testes:** xUnit (backend) e Vitest (frontend)
 
+O planejamento seguido no desenvolvimento, dividido em fases, está em [`docs/PLANEJAMENTO.md`](docs/PLANEJAMENTO.md).
+
 ---
 
 ## Como executar

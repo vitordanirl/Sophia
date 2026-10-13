@@ -51,3 +51,43 @@ export interface ProdutoRequest {
   nome: string
   valorUnitario: number
 }
+
+export interface ItemVendaRequest {
+  produtoId: number
+  quantidade: number
+  valorUnitario: number
+}
+
+export interface CriarVendaRequest {
+  clienteId: number
+  /** yyyy-MM-dd; se omitida, a API assume a data de hoje. */
+  dataVenda: string | null
+  itens: ItemVendaRequest[]
+}
+
+export interface ItemVenda {
+  id: number
+  produtoId: number
+  produtoNome: string
+  quantidade: number
+  valorUnitario: number
+  subtotal: number
+}
+
+export interface Venda {
+  id: number
+  dataVenda: string
+  cliente: { id: number; cpf: string; nome: string }
+  itens: ItemVenda[]
+  total: number
+}
+
+export interface VendaResumo {
+  id: number
+  dataVenda: string
+  clienteId: number
+  clienteCpf: string
+  clienteNome: string
+  quantidadeItens: number
+  total: number
+}

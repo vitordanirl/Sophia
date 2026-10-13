@@ -15,4 +15,16 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Bibliotecas em chunks próprios: mudam pouco e ficam em cache entre deploys
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-dom/client', 'react-router'],
+          ui: ['radix-ui', 'cmdk', 'lucide-react', 'sonner'],
+          data: ['@tanstack/react-query', 'axios', 'react-hook-form', '@hookform/resolvers', 'zod'],
+        },
+      },
+    },
+  },
 })

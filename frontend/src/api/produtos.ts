@@ -9,8 +9,6 @@ export const produtosApi = {
   listar: async (params: ListarProdutosParams) =>
     (await http.get<PagedResult<Produto>>('/produtos', { params })).data,
 
-  obter: async (id: number) => (await http.get<Produto>(`/produtos/${id}`)).data,
-
   criar: async (request: ProdutoRequest) => (await http.post<Produto>('/produtos', request)).data,
 
   atualizar: async (id: number, request: ProdutoRequest) =>

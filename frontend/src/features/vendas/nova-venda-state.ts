@@ -22,7 +22,6 @@ export type NovaVendaAction =
   | { type: 'lancarItem'; produto: ItemLancado['produto']; quantidade: number; valorUnitario: number }
   | { type: 'atualizarItem'; chave: string; campos: Partial<Pick<ItemLancado, 'quantidade' | 'valorUnitario'>> }
   | { type: 'removerItem'; chave: string }
-  | { type: 'reiniciar' }
 
 export const estadoInicial = (): NovaVendaState => ({ cliente: null, dataVenda: todayIso(), itens: [] })
 
@@ -65,9 +64,6 @@ export function novaVendaReducer(state: NovaVendaState, action: NovaVendaAction)
 
     case 'removerItem':
       return { ...state, itens: state.itens.filter((i) => i.chave !== action.chave) }
-
-    case 'reiniciar':
-      return estadoInicial()
   }
 }
 

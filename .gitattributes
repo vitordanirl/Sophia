@@ -1,0 +1,10 @@
+# Normaliza finais de linha no repositório (LF), independente do sistema operacional
+* text=auto eol=lf
+
+# Arquivos de solução do Visual Studio permanecem em CRLF
+*.sln text eol=crlf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary

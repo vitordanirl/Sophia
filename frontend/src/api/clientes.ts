@@ -9,8 +9,6 @@ export const clientesApi = {
   listar: async (params: ListarClientesParams) =>
     (await http.get<PagedResult<Cliente>>('/clientes', { params })).data,
 
-  obter: async (id: number) => (await http.get<Cliente>(`/clientes/${id}`)).data,
-
   criar: async (request: ClienteRequest) => (await http.post<Cliente>('/clientes', request)).data,
 
   atualizar: async (id: number, request: ClienteRequest) =>
